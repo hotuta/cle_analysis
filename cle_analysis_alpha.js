@@ -1,4 +1,24 @@
-/*varsion0.02alpha*/
+今日
+木
+自分1 個のアイテムを編集しました
+19:13
+JavaScript
+cle_analysisalpha.js
+木
+自分1 個のアイテムの名前を変更しました
+19:11
+JavaScript
+cle_analysisalpha.js
+cle_analysis0_02alpha.js
+木
+自分1 個のアイテムをアップロードしました
+9:56
+JavaScript
+cle_analysis0_02alpha.js
+11 KB を使用中（0%）
+追加容量を購入できます
+cle_analysisalpha.js開く
+/*varsion0.03alpha*/
 function analysiscle(){
 var resultstr="";
 
@@ -10,7 +30,7 @@ var period=new Array(7);
 var plusinfo=new Array(7);
 var content=new Array(7);
 
-var user = window.prompt("csv化する期間を半角文字で入力してください。\n開始日と終了日を半角ハイフンで結んでください。\n例:2015/04/01-2015/08/10", "");
+var user = window.prompt("cle_analysis ver 0.03alpha\ncsv化する期間を半角文字で入力してください。\n開始日と終了日を半角ハイフンで結んでください。\n例:2015/04/01-2015/08/10", "");
 var SandEstr = user.split("-");
 var EndYMD = SandEstr[1].split("/");
 var EndYear = parseInt(EndYMD[0],10);
@@ -19,7 +39,7 @@ var EndDay = parseInt(EndYMD[2],10);
 var excuteIsTrue=true;
 if(!(1<=EndMonth&&EndMonth<=12&&1<=EndDay&&EndDay<=31)){
 	alert("月もしくは日が不適切な値です。");
-	return -1;
+	//return -1;
 }
 var EndYMDnum=EndYear*10000+EndMonth*100+EndDay;
 
@@ -162,7 +182,7 @@ var interval_id=setInterval(function() {
 					allDay="True";
 					}
 				}
-				resultstr+="Subject,Start Date,Start Time,End Time,All Day Event,Private\n"+content[j+plusnum]+","+year[ymd_c+plusnum]+"/"+month[ymd_c+plusnum]+"/"+day[ymd_c+plusnum]+","+startTime+","+endTime+","+allDay+",True\n\n";
+				resultstr+="Subject,Start Date,Start Time,End Date,End Time,All Day Event,Private\n"+content[j+plusnum]+","+year[ymd_c+plusnum]+"/"+month[ymd_c+plusnum]+"/"+day[ymd_c+plusnum]+","+startTime+","+year[ymd_c+plusnum]+"/"+month[ymd_c+plusnum]+"/"+day[ymd_c+plusnum]+","+endTime+","+allDay+",True\n\n";
  			 }
 			 ymd_c++;
 		}
@@ -175,11 +195,11 @@ var interval_id=setInterval(function() {
 			clearInterval(interval_id);
 			var result_href = "data:application/octet-stream," + encodeURIComponent(resultstr);
 			location.href=result_href;
+			showThisWeek();
 			break;
 		}
 	}
 }, 500);
 }
-
 
 
