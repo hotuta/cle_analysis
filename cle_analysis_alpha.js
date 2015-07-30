@@ -1,9 +1,9 @@
-/*varsion0.04alpha*/
+/*varsion0.05alpha*/
 function analysiscle(){
 var clea_resultstr="";
 var clea_excuteIsTrue=true;
 
-var clea_user = window.prompt("csv化する期間を半角文字で入力してください。\n開始日と終了日を半角ハイフンで結んでください。\n例:2015/04/01-2015/08/10", "");
+var clea_user = window.prompt("cle_analysis ver0.05α\ncsv化する期間を半角文字で入力してください。\n開始日と終了日を半角ハイフンで結んでください。\n例:2015/04/01-2015/08/10", "");
 var clea_SandEstr = clea_user.split("-");
 var clea_EndYMD = clea_SandEstr[1].split("/");
 var clea_EndYear = parseInt(clea_EndYMD[0],10);
@@ -31,7 +31,7 @@ var cle_param = {
 };
 
     var clea_addelement = document.createElement('div'); 
-    clea_addelement.id = "id"; 
+    clea_addelement.id = "id";
     clea_addelement.style.backgroundColor = 'white'; 
     var clea_elementobj = document.getElementsByTagName("body").item(0); 
     clea_elementobj.appendChild(clea_addelement); 
@@ -88,7 +88,7 @@ var lectCodeToP_and_D = new Object();//履修年+セメスタ数+講義コード
 		
 			clea_daysubstr=get_content_str(clea_weeklyhtml,"=\""+clea_clsnameday+"\"","</td>",clea_Index_num_week);
 			for(var clea_j=0;clea_j<clea_daysubstr.split("=\"details\"").length-1;clea_j++){
-				clea_dayspstr=get_content_str(clea_daysubstr.replace(/[\n\r]/g,"").replace(/\s+/g, ""),"=\"details\">","</div></div>",clea_Index_num_day);
+				clea_dayspstr=get_content_str(clea_daysubstr.replace(/[\r\n]/g,"").replace(/\s+/g, ""),"=\"details\">","</div></div>",clea_Index_num_day);
 				var clea_period=get_content_str(clea_dayspstr,"=\"period\">","</div>",0).replace(/時限/g,"");
 				var clea_s_dayspstr=get_content_str(clea_dayspstr,"=\"text\">","</span>",0);
 				var clea_content=get_content_str(clea_dayspstr,";\">","</a>",0);
@@ -169,15 +169,38 @@ var lectCodeToP_and_D = new Object();//履修年+セメスタ数+講義コード
 						clea_details_and_places="";
 					}
 				}
-				clea_resultstr+="Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private\n"+clea_content+","+clea_year+"/"+clea_month+"/"+clea_day+","+clea_startTime+","+clea_year+"/"+clea_month+"/"+clea_day+","+clea_endTime+","+clea_allDay+","+clea_details_and_places+",True\n\n";
+				clea_resultstr+="Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private\r\n"+clea_content+","+clea_year+"/"+clea_month+"/"+clea_day+","+clea_startTime+","+clea_year+"/"+clea_month+"/"+clea_day+","+clea_endTime+","+clea_allDay+","+clea_details_and_places+",True\r\n\r\n";
 			}
 			var clea_nowDay= new Date(parseInt(clea_year,10),parseInt(clea_month,10)-1,parseInt(clea_day,10));
 			var clea_now_daydiff = (clea_eDay.getTime()-clea_nowDay.getTime())/(86400000);
 			clea_addelement.innerHTML=clea_now_daydiff;
 			if((parseInt(clea_year,10)*10000+parseInt(clea_month,10)*100+parseInt(clea_day,10))>=clea_EndYMDnum){
 				alert("終了しました");
-				var result_href = "data:application/octet-stream," + encodeURIComponent(clea_resultstr);
-				location.href=result_href;
+				if(window.navigator.msSaveBlob){
+					var blob = new Blob([clea_resultstr], {type: "text/plain"});
+					window.navigator.msSaveBlob(blob,"cle_schedule.csv");
+				}else{
+					var ua = window.navigator.userAgent.toLowerCase();
+					if(URL.createObjectURL && (ua.indexOf('firefox') == -1)){
+						var element_a = document.createElement("a");
+						var blob = new Blob([clea_resultstr], {type: "text/plain"});
+						element_a.href = URL.createObjectURL(blob);
+						element_a.target = '_blank';
+						element_a.download = 'cle_schedule.csv';
+						//element_a.click();
+						//イベントオブジェクトを使用する
+						
+						var mouse_event = document.createEvent("MouseEvent");
+						mouse_event.initEvent("click",false,true);
+						element_a.dispatchEvent(mouse_event);
+						URL.revokeObjectURL(element_a.href);
+					}else{
+						var result_href = "data:application/octet-stream," + encodeURIComponent(clea_resultstr);
+						location.href=result_href;
+					}
+
+
+				}
 				clea_excuteIsTrue = false;
 				delete(weekStartDay);
 				break;
