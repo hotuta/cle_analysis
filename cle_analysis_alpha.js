@@ -1,9 +1,9 @@
-/*varsion0.05alpha*/
+/*varsion0.06alpha*/
 function analysiscle(){
 var clea_resultstr="";
 var clea_excuteIsTrue=true;
 
-var clea_user = window.prompt("cle_analysis ver0.05α\ncsv化する期間を半角文字で入力してください。\n開始日と終了日を半角ハイフンで結んでください。\n例:2015/04/01-2015/08/10", "");
+var clea_user = window.prompt("cle_analysis ver0.06α\ncsv化する期間を半角文字で入力してください。\n開始日と終了日を半角ハイフンで結んでください。\n例:2015/04/01-2015/08/10", "");
 var clea_SandEstr = clea_user.split("-");
 var clea_EndYMD = clea_SandEstr[1].split("/");
 var clea_EndYear = parseInt(clea_EndYMD[0],10);
@@ -30,11 +30,17 @@ var cle_param = {
    	'buttonName'        : "selectDayStateChange"
 };
 
-    var clea_addelement = document.createElement('div'); 
-    clea_addelement.id = "id";
-    clea_addelement.style.backgroundColor = 'white'; 
+    var prgstartnum = (clea_eDay.getTime()-clea_sDay.getTime())/(86400000);//初期値
+    var prgdotnum = 100/prgstartnum;//プログレスバーの最大値を100に合わせるための数値(掛ける数)
+    var clea_prgbarElement = document.createElement('progress');//プログレスバーを作成
+    clea_prgbarElement.max =100;//プログレスバーの最大値
+    clea_prgbarElement.style.backgroundColor = 'white';
+    var clea_prgnumElement = document.createElement('div'); //進捗パーセント表示用divを作成
+    clea_prgnumElement.style.backgroundColor = 'white';
     var clea_elementobj = document.getElementsByTagName("body").item(0); 
-    clea_elementobj.appendChild(clea_addelement); 
+    //要素をbodyタグに追加
+    clea_elementobj.appendChild(clea_prgbarElement);
+    clea_elementobj.appendChild(clea_prgnumElement);
 
 
 var clea_weeklyhtml=clea_get_schoollesson_info(clea_requestUrl,cle_param,null);
@@ -173,7 +179,11 @@ var lectCodeToP_and_D = new Object();//履修年+セメスタ数+講義コード
 			}
 			var clea_nowDay= new Date(parseInt(clea_year,10),parseInt(clea_month,10)-1,parseInt(clea_day,10));
 			var clea_now_daydiff = (clea_eDay.getTime()-clea_nowDay.getTime())/(86400000);
-			clea_addelement.innerHTML=clea_now_daydiff;
+
+			clea_prgbarElement.value = (prgstartnum-clea_now_daydiff)*prgdotnum;//プログレスバーの内容を更新
+			clea_prgnumElement.innerText = parseInt(clea_prgbarElement.value,10)+"%";//パーセンテージを更新
+			clea_prgnumElement.textContent = parseInt(clea_prgbarElement.value,10)+"%";//firefox対策
+			
 			if((parseInt(clea_year,10)*10000+parseInt(clea_month,10)*100+parseInt(clea_day,10))>=clea_EndYMDnum){
 				alert("終了しました");
 				if(window.navigator.msSaveBlob){
