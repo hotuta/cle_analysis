@@ -1,4 +1,4 @@
-/*version0.07alpha*/
+/*version0.0.8alpha*/
 
 /*global variable*/
     var clea_docele = document.documentElement , clea_bodyele = document.body ;
@@ -23,7 +23,7 @@ function analysiscle(){
         //現在、伊勢原キャンパスには非対応(時間割構成が複雑であるため)
         var clea_starttimedef = new Array();
         var clea_endtimedef = new Array();
-        if(clea_mainprocessing>=0&&clea_mainprocessing<=2){//湘南、代々木、高輪
+        if(clea_selected_campusnum>=0&&clea_selected_campusnum<=2){//湘南、代々木、高輪
             //1時限目
             clea_starttimedef[0]="9:20";
             clea_endtimedef[0]="10:50";
@@ -42,7 +42,7 @@ function analysiscle(){
             //6時限目
             clea_starttimedef[5]="18:30";
             clea_endtimedef[5]="20:00";
-        }else if(clea_mainprocessing==3){//清水
+        }else if(clea_selected_campusnum==3){//清水
             //1時限目
             clea_starttimedef[0]="9:00";
             clea_endtimedef[0]="10:30";
@@ -62,7 +62,7 @@ function analysiscle(){
             clea_starttimedef[5]="18:00";//ダミー(本来6時限目は該当キャンパスには存在しない)
             clea_endtimedef[5]="19:30";
 
-        }else if(clea_mainprocessing>=4&&clea_mainprocessing<=5){//熊本、阿蘇
+        }else if(clea_selected_campusnum>=4&&clea_selected_campusnum<=5){//熊本、阿蘇
             //1時限目
             clea_starttimedef[0]="9:10";
             clea_endtimedef[0]="10:40";
