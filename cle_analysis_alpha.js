@@ -1,4 +1,4 @@
-/*version0.0.8alpha*/
+/*version0.0.9alpha*/
 
 /*global variable*/
     var clea_docele = document.documentElement , clea_bodyele = document.body ;
@@ -12,6 +12,11 @@ function analysiscle(){
         var clea_lectendtime = new Array();
         var clea_campus_radiobtn = new Array();
         var clea_selected_campusnum = 0;
+        var clea_campus_adresscheckbox = document.getElementById("dlg_adrscheckbox");
+        var clea_trueis_adrsinclude = false;
+        if(clea_campus_adresscheckbox.checked){//住所を含むか否か
+            clea_trueis_adrsinclude = true;
+        }
         for(var ci=0;ci<7;ci++){
             clea_campus_radiobtn[ci] = document.getElementById("dlg_radiobtn"+ci);
             if(clea_campus_radiobtn[ci].checked == true){
@@ -23,6 +28,13 @@ function analysiscle(){
         //現在、伊勢原キャンパスには非対応(時間割構成が複雑であるため)
         var clea_starttimedef = new Array();
         var clea_endtimedef = new Array();
+
+        /*
+        各キャンパスの住所は2015.11.10時点のもの
+        http://www.u-tokai.ac.jp/info/traffic_map/
+        (阿蘇キャンパスのみ詳細を得ることができなかったため、Google Mapより住所を得た)
+        */
+        var clea_campus_address =""; 
         if(clea_selected_campusnum>=0&&clea_selected_campusnum<=2){//湘南、代々木、高輪
             //1時限目
             clea_starttimedef[0]="9:20";
@@ -42,6 +54,16 @@ function analysiscle(){
             //6時限目
             clea_starttimedef[5]="18:30";
             clea_endtimedef[5]="20:00";
+
+            if(clea_trueis_adrsinclude){
+                if(clea_selected_campusnum==0){
+                    clea_campus_address="神奈川県平塚市北金目４-１-１";
+                }else if(clea_selected_campusnum==1){
+                    clea_campus_address="東京都渋谷区富ヶ谷２-２８-４";
+                }else{
+                    clea_campus_address="東京都港区高輪２-３-２３";
+                }
+            }
         }else if(clea_selected_campusnum==3){//清水
             //1時限目
             clea_starttimedef[0]="9:00";
@@ -62,6 +84,10 @@ function analysiscle(){
             clea_starttimedef[5]="18:00";//ダミー(本来6時限目は該当キャンパスには存在しない)
             clea_endtimedef[5]="19:30";
 
+            if(clea_trueis_adrsinclude){
+                clea_campus_address="静岡県静岡市清水区折戸３-２０-１";
+            }
+
         }else if(clea_selected_campusnum>=4&&clea_selected_campusnum<=5){//熊本、阿蘇
             //1時限目
             clea_starttimedef[0]="9:10";
@@ -81,6 +107,14 @@ function analysiscle(){
             //6時限目
             clea_starttimedef[5]="18:10";//ダミー(本来6時限目は該当キャンパスには存在しない)
             clea_endtimedef[5]="19:40";
+
+            if(clea_trueis_adrsinclude){
+                if(clea_selected_campusnum==4){
+                    clea_campus_address="熊本県熊本市東区渡鹿９-１-１";
+                }else{
+                    clea_campus_address="熊本県阿蘇郡南阿蘇村河陽５４３５";
+                }
+            }
         }else{//札幌
             //1時限目
             clea_starttimedef[0]="9:10";
@@ -100,6 +134,10 @@ function analysiscle(){
             //6時限目
             clea_starttimedef[5]="18:25";//ダミー(本来6時限目は該当キャンパスには存在しない)
             clea_endtimedef[5]="19:55";
+
+            if(clea_trueis_adrsinclude){
+                clea_campus_address="北海道札幌市南区南沢５条１丁目１−１";
+            }
 
         }
         var clea_resultstr="";
@@ -152,7 +190,7 @@ function analysiscle(){
     clea_elementobj.appendChild(clea_prgnumElement);
 
 
-    var clea_weeklyhtml=clea_get_schoollesson_info(clea_requestUrl,cle_param,null);
+    var clea_weeklyhtml=clea_get_schoollesson_info(clea_requestUrl,cle_param,null,null);
     var lectCodeToP_and_D = new Object();//履修年+セメスタ数+講義コードに対応させて場所と詳細情報を格納するオブジェクト
 
     var clea_innerloopfunc=function (){
@@ -211,24 +249,31 @@ function analysiscle(){
                 var clea_startTime="";
                 var clea_endTime="";
                 var clea_allDay="False";
+                var clea_campusAdrs="";
                 if(clea_period=="１"){
                     clea_startTime=clea_starttimedef[0];
                     clea_endTime=clea_endtimedef[0];
+                    clea_campusAdrs = clea_campus_address;
                 }else if(clea_period=="２"){
                     clea_startTime=clea_starttimedef[1];
                     clea_endTime=clea_endtimedef[1];
+                    clea_campusAdrs = clea_campus_address;
                 }else if(clea_period=="３"){
                     clea_startTime=clea_starttimedef[2];
                     clea_endTime=clea_endtimedef[2];
+                    clea_campusAdrs = clea_campus_address;
                 }else if(clea_period=="４"){
                     clea_startTime=clea_starttimedef[3];
                     clea_endTime=clea_endtimedef[3];
+                    clea_campusAdrs = clea_campus_address;
                 }else if(clea_period=="５"){
                     clea_startTime=clea_starttimedef[4];
                     clea_endTime=clea_endtimedef[4];
+                    clea_campusAdrs = clea_campus_address;
                 }else if(clea_period=="６"){
                     clea_startTime=clea_starttimedef[5];
                     clea_endTime=clea_endtimedef[5];
+                    clea_campusAdrs = clea_campus_address;
                 }else{
                     if(clea_period.replace(/\s+/g, "")!=""){
                         var clea_SandEstr=clea_period.replace(/\s+/g, "").split("～");
@@ -237,6 +282,7 @@ function analysiscle(){
                     }else{
                         clea_allDay="True";
                     }
+                    clea_campusAdrs="";
                 }
             
                 var clea_originparamstr="";
@@ -260,7 +306,7 @@ function analysiscle(){
                             'buttonName': 'selectJikan'
                         };
 
-                        clea_details_and_places=clea_get_schoollesson_info(clea_s_requestUrl,clea_s_param,"clea_analysis_schoollesson_info");
+                        clea_details_and_places=clea_get_schoollesson_info(clea_s_requestUrl,clea_s_param,"clea_analysis_schoollesson_info",clea_campusAdrs);
                         lectCodeToP_and_D[lectCode]=clea_details_and_places;
                     }else{
                         clea_details_and_places=lectCodeToP_and_D[lectCode];
@@ -279,7 +325,7 @@ function analysiscle(){
                             'buttonName': 'selectSchedule'
                         };
 
-                        clea_details_and_places=clea_get_schoollesson_info(clea_s_requestUrl,clea_s_param,"clea_analysis_schoollesson_info");
+                        clea_details_and_places=clea_get_schoollesson_info(clea_s_requestUrl,clea_s_param,"clea_analysis_schoollesson_info",clea_campusAdrs);
                     }else{
                         clea_details_and_places="";
                     }
@@ -331,7 +377,7 @@ function analysiscle(){
             'value(startday)'   : clea_WeekstartDay,
             'buttonName'        : "selectNextWeekChange"
         };
-        clea_weeklyhtml=clea_get_schoollesson_info(clea_requestUrl,cle_param,null);
+        clea_weeklyhtml=clea_get_schoollesson_info(clea_requestUrl,cle_param,null,null);
 
         if(clea_excuteIsTrue==true){
             setTimeout(clea_innerloopfunc, 500);
@@ -345,7 +391,7 @@ function analysiscle(){
 	clea_dlgfunc(clea_mainprocessing);//入力用ダイアログ呼び出し
 }
 
-function clea_get_schoollesson_info(url, param, callback) {
+function clea_get_schoollesson_info(url, param, callback,cmpsadrs) {
     var clea_resultdata="";
   jq$.ajax({  
     url: url,
@@ -356,7 +402,7 @@ function clea_get_schoollesson_info(url, param, callback) {
     cache: false
     }).done(function(data){
         if(callback!=null){
-            clea_resultdata = clea_analysis_schoollesson_info(data);
+            clea_resultdata = clea_analysis_schoollesson_info(data,cmpsadrs);
         }else{
             clea_resultdata = data;
         }
@@ -367,7 +413,7 @@ function clea_get_schoollesson_info(url, param, callback) {
   return clea_resultdata;
 }
 
-function clea_analysis_schoollesson_info(clea_htmldata){
+function clea_analysis_schoollesson_info(clea_htmldata,cmpsadrs_s){
 var clea_details="";
 var clea_places = "";
 
@@ -386,7 +432,7 @@ for(var i = 0;i<clea_tr_num;i++){
         clea_details = get_content_str(clea_firsthtmldata,"<td class=\"item\">","</td",0).replace(/\s+/g, "").replace(/\"/g,"").replace(/<br>/g," ");
       }
       if(clea_firsthtmldata.indexOf("教室</td>")!=-1){
-        clea_places = get_content_str(clea_firsthtmldata,"<td class=\"item\">","</td",0).replace(/\s+/g, "").replace(/\"/g,"").replace(/<br>/g," ");
+        clea_places = get_content_str(clea_firsthtmldata,"<td class=\"item\">","</td",0).replace(/\s+/g, "").replace(/\"/g,"").replace(/<br>/g,"");
       }      
       if(clea_firsthtmldata.indexOf("詳細</td>")!=-1){
         clea_details = get_content_str(clea_firsthtmldata,"<td class=\"item\">","</td",0).replace(/\s+/g, "").replace(/\"/g,"").replace(/<br>/g," ");
@@ -396,7 +442,11 @@ for(var i = 0;i<clea_tr_num;i++){
       }
    }
 }
-    return clea_details.toString()+","+clea_places.toString();
+    if(cmpsadrs_s!=""&&cmpsadrs_s!=null){
+        return clea_details.toString()+","+"("+clea_places.toString()+")"+cmpsadrs_s;
+    }else{
+        return clea_details.toString()+","+clea_places.toString();
+    }
 }
 
 function get_content_str(gcs_originstr,gcs_startstr,gcs_endstr,fromIndex_n){
@@ -502,7 +552,7 @@ function clea_dlgfunc(callback){
     	okbtnelestyle.bottom = '20px';
     	okbtnelestyle.left = '20px';
 
-        var dlg_cancelbtnele = document.createElement('input');//okbutton
+        var dlg_cancelbtnele = document.createElement('input');//cancelbutton
         dlg_cancelbtnele.type = 'button';
         dlg_cancelbtnele.value = 'CANCEL';
         dlg_cancelbtnele.onclick = clea_closeDlg;
@@ -523,6 +573,18 @@ function clea_dlgfunc(callback){
 
     /*ダイアログのベースはここまで*/
 
+    /*スクリプト情報*/
+        var dlg_caption_scriptinfo = document.createElement('div');
+        var dlg_br0 = document.createElement('br');
+        var dlg_caption_scriptinfotxt = document.createTextNode("CLE_Analysis ver0.0.9"); 
+        var dlg_caption_hr0 = document.createElement('hr');
+        dlg_caption_hr0.style.width = '90%';
+        dlgfrontele.appendChild(dlg_caption_scriptinfo);
+        dlgfrontele.appendChild(dlg_caption_hr0);
+        dlg_caption_scriptinfo.appendChild(dlg_caption_scriptinfotxt);
+        dlgfrontele.appendChild(dlg_br0);
+    /*スクリプト情報はここまで*/
+
     /*キャンパス選択の題*/
     	var dlg_caption_campus = document.createElement('div');
     	var dlg_caption_campustxt = document.createTextNode("在籍及び受講キャンパスを選択してください"); 
@@ -542,7 +604,7 @@ function clea_dlgfunc(callback){
 
     		var dlg_radiolabel = document.createElement('label');
     		//dlg_radiolabel.className = 'flatctrlmain';
-    		dlg_radiobtn[ci] = document.createElement('input');//okbutton
+    		dlg_radiobtn[ci] = document.createElement('input');//radiobutton
     		dlg_radiobtn[ci].type = 'radio';
     		dlg_radiobtn[ci].name = 'campusnamebtn'
     		dlg_radiobtn[ci].value = ci;
@@ -640,9 +702,9 @@ function clea_dlgfunc(callback){
     			dlg_Mselectbox[cj].selectedIndex = dlg_nowMonth-1;
     		}else{
     			if(dlg_nowMonth<9&&3<dlg_nowMonth){
-    				dlg_Mselectbox[cj].selectedIndex = 7;//8月
+    				dlg_Mselectbox[cj].selectedIndex = 8;//9月
     			}else{
-    				dlg_Mselectbox[cj].selectedIndex = 2;//3月
+    				dlg_Mselectbox[cj].selectedIndex = 3;//4月
     			}
     		}
 
@@ -668,6 +730,35 @@ function clea_dlgfunc(callback){
     		dlgfrontele.appendChild(dlg_br3);
     	}
     /*開始/終了日の入力欄はここまで*/
+
+    /*オプションの題*/
+        var dlg_br4 = document.createElement('br');
+        var dlg_caption_option = document.createElement('div');
+        var dlg_caption_optiontxt = document.createTextNode("オプション"); 
+        var dlg_caption_hr2 = document.createElement('hr');
+        dlg_caption_option.style.textAlign = 'center';
+        dlg_caption_hr2.style.width = '90%';
+        dlgfrontele.appendChild(dlg_br4);
+        dlgfrontele.appendChild(dlg_caption_option);
+        dlgfrontele.appendChild(dlg_caption_hr2);
+        dlg_caption_option.appendChild(dlg_caption_optiontxt);
+    /*オプションの題はここまで*/
+
+    /*キャンパス住所の有無のチェックボックス*/
+            var dlg_br5 = document.createElement('br');
+            var dlg_adrstxt = document.createTextNode("講義情報にキャンパスの住所を含む");
+            var dlg_adrslabel = document.createElement('label');
+            dlg_adrscheckbox = document.createElement('input');//checkbox
+            dlg_adrscheckbox.type = 'checkbox';
+            dlg_adrscheckbox.name = 'campusadrscheckbox'
+            dlg_adrscheckbox.id = "dlg_adrscheckbox";
+            dlg_adrscheckbox.checked=true;
+
+            dlgfrontele.appendChild(dlg_adrslabel);
+            dlg_adrslabel.appendChild(dlg_adrscheckbox);
+            dlg_adrslabel.appendChild(dlg_adrstxt, dlg_adrscheckbox.nextSibling);
+            dlgfrontele.appendChild(dlg_br5);
+    /*キャンパス住所の有無のチェックボックスはここまで*/
 
     clea_dlgcalled=true;
     return 0;
