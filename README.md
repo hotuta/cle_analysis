@@ -8,6 +8,8 @@ This software is released under the MIT License, see LICENSE.
 javascript:(function(docbk,funcbk,scrpbk
 {scrpbk=docbk.createElement('script');scrpbk.src='https://googledrive.com/host/0B-deVHz0HckZNzhBV0g4UUhPWHc/';scrpbk.onload=function(){funcbk()};docbk.body.appendChild(scrpbk);funcbk=function(){analysiscle();};})(document)
 ```
+2.キャンパスライフエンジンにログインし、1で作成したブックマークをクリックして実行してください。  
+  
 Version0.0.7より、湘南、代々木、高輪以外の時間割に対応しました。(一部を除く/※)
 ※現在、伊勢原キャンパス(医学部/健康科学部)の時間割には対応していません。  
 Version0.0.9住所情報を含めるオプションを追加
