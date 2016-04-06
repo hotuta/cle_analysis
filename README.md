@@ -5,8 +5,7 @@ This software is released under the MIT License, see LICENSE.
 使用方法  
 1.以下のスクリプトをコピーしてブックマークに登録してください。  
 ```
-javascript:(function(docbk,funcbk,scrpbk
-{scrpbk=docbk.createElement('script');scrpbk.src='https://googledrive.com/host/0B-deVHz0HckZNzhBV0g4UUhPWHc/';scrpbk.onload=function(){funcbk()};docbk.body.appendChild(scrpbk);funcbk=function(){analysiscle();};})(document)
+javascript:(function(docbk,funcbk,scrpbk){scrpbk=docbk.createElement('script');scrpbk.src='https://googledrive.com/host/0B-deVHz0HckZNzhBV0g4UUhPWHc/';scrpbk.onload=function(){funcbk()};docbk.body.appendChild(scrpbk);funcbk=function(){analysiscle();};})(document)
 ```
 2.キャンパスライフエンジンにログインし、1で作成したブックマークをクリックして実行してください。  
   
