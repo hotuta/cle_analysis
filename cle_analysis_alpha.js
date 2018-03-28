@@ -735,9 +735,83 @@ function clea_dlgfunc(callback){
             dlgfrontele.appendChild(dlg_br5);
     /*キャンパス住所の有無のチェックボックスはここまで*/
 
+    /*アップデート内容の題*/
+        var dlg_br6 = document.createElement('br');
+        var dlg_caption_option2 = document.createElement('div');
+        var dlg_caption_optiontxt2 = document.createTextNode("info"); 
+        var dlg_caption_hr3 = document.createElement('hr');
+        dlg_caption_option2.style.textAlign = 'center';
+        dlg_caption_hr3.style.width = '90%';
+        dlgfrontele.appendChild(dlg_br6);
+        dlgfrontele.appendChild(dlg_caption_option2);
+        dlgfrontele.appendChild(dlg_caption_hr3);
+        dlg_caption_option2.appendChild(dlg_caption_optiontxt2);
+    /*アップデート内容の題ここまで*/
+
+    /*アップデート内容*/
+        var dlg_br7 = document.createElement('br');
+        var dlg_caption_option3 = document.createElement('div');
+        var dlg_caption_optiontxt3 = document.createTextNode("100分授業に対応しました"); 
+        dlg_caption_option3.style.textAlign = 'center';
+        dlg_caption_hr3.style.width = '90%';
+        dlgfrontele.appendChild(dlg_caption_option3);
+        dlg_caption_option3.appendChild(dlg_caption_optiontxt3);
+    /*アップデート内容ここまで*/
+
+    /*Contributorsの題*/
+        var dlg_br8 = document.createElement('br');
+        var dlg_caption_option4 = document.createElement('div');
+        var dlg_caption_optiontxt4 = document.createTextNode("Contributors"); 
+        var dlg_caption_hr4 = document.createElement('hr');
+        dlg_caption_option4.style.textAlign = 'center';
+        dlg_caption_hr4.style.width = '90%';
+        dlgfrontele.appendChild(dlg_br8);
+        dlgfrontele.appendChild(dlg_caption_option4);
+        dlgfrontele.appendChild(dlg_caption_hr4);
+        dlg_caption_option4.appendChild(dlg_caption_optiontxt4);
+    /*Contributorsの題ここまで*/
+
+    /*Contributors*/
+        var api_script = document.createElement('script');
+        api_script.src = "https://api.github.com/repos/prprhyt/cle_analysis/contributors?callback=addCb";
+        var contributors = document.createElement('p');
+        contributors.id = "contributors";
+        dlgfrontele.appendChild(api_script);
+        dlgfrontele.appendChild(contributors);
+    /*Contributorsここまで*/
+
+    /*fork me on GitHub*/
+        var dlg_br9 = document.createElement('br');
+        var dlg_caption_option5 = document.createElement('a');
+        dlg_caption_option5.href = "https://github.com/prprhyt/cle_analysis/";
+        dlg_caption_option5.target = "_blank";
+        var dlg_caption_optiontxt5 = document.createTextNode("Fork me on GitHub"); 
+        dlg_caption_option5.style.textAlign = 'center';
+        dlgfrontele.appendChild(dlg_br9);
+        dlgfrontele.appendChild(dlg_caption_option5);
+        dlg_caption_option5.appendChild(dlg_caption_optiontxt5);
+    /*fork me on GitHubここまで*/
+
+
     clea_dlgcalled=true;
     return 0;
 
+}
+
+function addCb(json){
+    var contributors = document.getElementById('contributors');
+    for(var i=0;i<json.data.length;++i){
+        var br_ = document.createElement('br');
+        var contributorLink = document.createElement('a');
+        contributorLink.href = json.data[i].html_url;
+        contributorLink.target = "_blank";
+        contributorLink.style.textAlign = 'center';
+        var contributorName = document.createTextNode(json.data[i].login); 
+        contributorLink.appendChild(contributorName);
+        contributors.appendChild(contributorLink);
+        contributors.appendChild(br_);
+        //contributors.insertBefore(contributorLink,br_);
+    }
 }
 
 function getCampusNameFromNum(index_num){
