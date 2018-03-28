@@ -1,4 +1,4 @@
-/*version0.0.9alpha*/
+/*version0.0.10alpha*/
 
 /*global variable*/
     var clea_docele = document.documentElement , clea_bodyele = document.body ;
@@ -551,7 +551,7 @@ function clea_dlgfunc(callback){
     /*スクリプト情報*/
         var dlg_caption_scriptinfo = document.createElement('div');
         var dlg_br0 = document.createElement('br');
-        var dlg_caption_scriptinfotxt = document.createTextNode("CLE_Analysis ver0.0.9"); 
+        var dlg_caption_scriptinfotxt = document.createTextNode("CLE_Analysis ver0.0.10"); 
         var dlg_caption_hr0 = document.createElement('hr');
         dlg_caption_hr0.style.width = '90%';
         dlgfrontele.appendChild(dlg_caption_scriptinfo);
