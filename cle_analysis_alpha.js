@@ -35,108 +35,83 @@ function analysiscle(){
         (阿蘇キャンパスのみ詳細を得ることができなかったため、Google Mapより住所を得た)
         */
         var clea_campus_address =""; 
-        if(clea_selected_campusnum>=0&&clea_selected_campusnum<=2){//湘南、代々木、高輪
-            //1時限目
-            clea_starttimedef[0]="9:20";
-            clea_endtimedef[0]="10:50";
-            //2時限目
-            clea_starttimedef[1]="11:05";
-            clea_endtimedef[1]="12:35";
-            //3時限目
-            clea_starttimedef[2]="13:25";
-            clea_endtimedef[2]="14:55";
-            //4時限目
-            clea_starttimedef[3]="15:10";
-            clea_endtimedef[3]="16:40";
-            //5時限目
-            clea_starttimedef[4]="16:50";
-            clea_endtimedef[4]="18:20";
-            //6時限目
-            clea_starttimedef[5]="18:30";
-            clea_endtimedef[5]="20:00";
+        if((clea_selected_campusnum>=1&&clea_selected_campusnum<=2)||6==clea_selected_campusnum){//代々木、高輪、札幌
+            clea_starttimedef = [
+            "9:10",
+            "11:00",
+            "13:30",
+            "15:20",
+            "17:10",
+            "19:00"
+            ];
+            clea_endtimedef = [
+            "10:50",
+            "12:40",
+            "15:10",
+            "17:00",
+            "18:50",
+            "20:40"
+            ];
 
             if(clea_trueis_adrsinclude){
-                if(clea_selected_campusnum==0){
-                    clea_campus_address="神奈川県平塚市北金目４-１-１";
-                }else if(clea_selected_campusnum==1){
+                if(clea_selected_campusnum==1){
                     clea_campus_address="東京都渋谷区富ヶ谷２-２８-４";
-                }else{
+                }else if(clea_selected_campusnum==2){
                     clea_campus_address="東京都港区高輪２-３-２３";
+                }else{
+                    clea_campus_address="北海道札幌市南区南沢５条１丁目１−１";
                 }
             }
-        }else if(clea_selected_campusnum==3){//清水
-            //1時限目
-            clea_starttimedef[0]="9:00";
-            clea_endtimedef[0]="10:30";
-            //2時限目
-            clea_starttimedef[1]="10:40";
-            clea_endtimedef[1]="12:10";
-            //3時限目
-            clea_starttimedef[2]="13:00";
-            clea_endtimedef[2]="14:30";
-            //4時限目
-            clea_starttimedef[3]="14:40";
-            clea_endtimedef[3]="16:10";
-            //5時限目
-            clea_starttimedef[4]="16:20";
-            clea_endtimedef[4]="17:50";
-            //6時限目
-            clea_starttimedef[5]="18:00";//ダミー(本来6時限目は該当キャンパスには存在しない)
-            clea_endtimedef[5]="19:30";
+        }else if(clea_selected_campusnum>=3&&clea_selected_campusnum<=5){//清水、熊本、阿蘇
+            clea_starttimedef = [
+            "9:00",
+            "10:50",
+            "13:20",
+            "15:10",
+            "17:00",
+            "18:50"
+            ];
+            clea_endtimedef = [
+            "10:40",
+            "12:30",
+            "15:00",
+            "16:50",
+            "18:40",
+            "20:30"
+            ];
 
             if(clea_trueis_adrsinclude){
+                if(clea_selected_campusnum==3){
                 clea_campus_address="静岡県静岡市清水区折戸３-２０-１";
-            }
-
-        }else if(clea_selected_campusnum>=4&&clea_selected_campusnum<=5){//熊本、阿蘇
-            //1時限目
-            clea_starttimedef[0]="9:10";
-            clea_endtimedef[0]="10:40";
-            //2時限目
-            clea_starttimedef[1]="10:50";
-            clea_endtimedef[1]="12:20";
-            //3時限目
-            clea_starttimedef[2]="13:10";
-            clea_endtimedef[2]="14:40";
-            //4時限目
-            clea_starttimedef[3]="14:50";
-            clea_endtimedef[3]="16:20";
-            //5時限目
-            clea_starttimedef[4]="16:30";
-            clea_endtimedef[4]="18:00";
-            //6時限目
-            clea_starttimedef[5]="18:10";//ダミー(本来6時限目は該当キャンパスには存在しない)
-            clea_endtimedef[5]="19:40";
-
-            if(clea_trueis_adrsinclude){
-                if(clea_selected_campusnum==4){
+                }else if(clea_selected_campusnum==4){
                     clea_campus_address="熊本県熊本市東区渡鹿９-１-１";
                 }else{
                     clea_campus_address="熊本県阿蘇郡南阿蘇村河陽５４３５";
                 }
             }
-        }else{//札幌
-            //1時限目
-            clea_starttimedef[0]="9:10";
-            clea_endtimedef[0]="10:40";
-            //2時限目
-            clea_starttimedef[1]="10:55";
-            clea_endtimedef[1]="12:25";
-            //3時限目
-            clea_starttimedef[2]="13:15";
-            clea_endtimedef[2]="14:45";
-            //4時限目
-            clea_starttimedef[3]="15:00";
-            clea_endtimedef[3]="16:30";
-            //5時限目
-            clea_starttimedef[4]="16:40";
-            clea_endtimedef[4]="18:10";
-            //6時限目
-            clea_starttimedef[5]="18:25";//ダミー(本来6時限目は該当キャンパスには存在しない)
-            clea_endtimedef[5]="19:55";
+
+        }else{//湘南
+            clea_starttimedef = [
+            "9:00",
+            "10:55",
+            "13:25",
+            "15:20",
+            "17:15",
+            "19:05"
+            ];
+            clea_endtimedef = [
+            "10:40",
+            "12:35",
+            "15:05",
+            "17:00",
+            "18:55",
+            "20:45"
+            ];
 
             if(clea_trueis_adrsinclude){
-                clea_campus_address="北海道札幌市南区南沢５条１丁目１−１";
+                if(clea_selected_campusnum==0){
+                    clea_campus_address="神奈川県平塚市北金目４-１-１";
+                }
             }
 
         }
